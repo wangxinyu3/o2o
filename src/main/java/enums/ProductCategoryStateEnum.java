@@ -1,7 +1,7 @@
 package enums;
 
 public enum  ProductCategoryStateEnum {
-    CHECK(0, "审核中"), OFFLINE(-1, "非法店铺"), SUCCESS(1, "操作成功"), PASS(2, "通过认证"), INNER_ERROR(-1001, "内部系统错误"), NULL_SHOP(-1003, "商店信息为空");
+    SUCCESS(1, "操作成功"),  INNER_ERROR(-1001, "操作失败"), EMPTY_LIST(-1002,"添加数少于1");
     private int state;
 
     private String stateInfo;
@@ -14,9 +14,9 @@ public enum  ProductCategoryStateEnum {
     /**
      * 依据传入的state返回相应enum值
      */
-    public static ProductCategoryStateEnum stateOf(int state) {
+    public static ProductCategoryStateEnum stateOf(int index) {
         for (ProductCategoryStateEnum stateEnum : values()) {
-            if (stateEnum.getState() == state) {
+            if (stateEnum.getState() == index) {
                 return stateEnum;
             }
         }

@@ -1,5 +1,6 @@
 package service;
 
+import dto.ImageHolder;
 import dto.ShopExecution;
 import entity.Shop;
 import exceptions.ShopOperationException;
@@ -31,7 +32,7 @@ public interface ShopService {
      * @return
      * @throws Exception
      */
-    ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution modifyShop(Shop shop, ImageHolder thumbnail) throws ShopOperationException;
 
     /**
      * 注册店铺信息，包括图片处理
@@ -41,5 +42,5 @@ public interface ShopService {
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution addShop(Shop shop, ImageHolder thumbnail) throws ShopOperationException;
 }

@@ -1,8 +1,9 @@
 package dao;
 
 import entity.ProductImg;
-import org.junit.Ignore;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProductImgDaoTest extends  BaseTest{
     @Autowired
     private ProductImgDao productImgDao;
@@ -37,14 +39,12 @@ public class ProductImgDaoTest extends  BaseTest{
     }
 
     @Test
-    @Ignore
     public void testBQueryProductImgList(){
         List<ProductImg> list = productImgDao.queryProductImgList(1L);
         assertEquals(2,list.size());
     }
 
     @Test
-    @Ignore
     public void testCDeleteProductImgProductId()throws Exception{
         long productId = 1L;
         int effectNum = productImgDao.deleteProductImgByProductId(productId);

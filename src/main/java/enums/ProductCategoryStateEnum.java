@@ -1,7 +1,8 @@
 package enums;
 
-public enum  ProductCategoryStateEnum {
-    SUCCESS(1, "操作成功"),  INNER_ERROR(-1001, "操作失败"), EMPTY_LIST(-1002,"添加数少于1");
+public enum ProductCategoryStateEnum {
+    SUCCESS(1, "创建成功"), INNER_ERROR(-1001, "操作失败"), EMPTY_LIST(-1002, "添加数少于1");
+
     private int state;
 
     private String stateInfo;
@@ -11,19 +12,6 @@ public enum  ProductCategoryStateEnum {
         this.stateInfo = stateInfo;
     }
 
-    /**
-     * 依据传入的state返回相应enum值
-     */
-    public static ProductCategoryStateEnum stateOf(int index) {
-        for (ProductCategoryStateEnum stateEnum : values()) {
-            if (stateEnum.getState() == index) {
-                return stateEnum;
-            }
-        }
-        return null;
-    }
-
-
     public int getState() {
         return state;
     }
@@ -31,4 +19,14 @@ public enum  ProductCategoryStateEnum {
     public String getStateInfo() {
         return stateInfo;
     }
+
+    public static ProductCategoryStateEnum stateOf(int index) {
+        for (ProductCategoryStateEnum state : values()) {
+            if (state.getState() == index) {
+                return state;
+            }
+        }
+        return null;
+    }
+
 }

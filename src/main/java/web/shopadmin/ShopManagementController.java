@@ -1,6 +1,7 @@
 package web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.ImageHolder;
 import dto.ShopExecution;
 import entity.Area;
 import entity.PersonInfo;
@@ -39,6 +40,11 @@ public class ShopManagementController {
     @Autowired
     private AreaService areaService;
 
+    /**
+     * 获取店铺管理信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/getshopmanagementinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopManagementInfo(HttpServletRequest request){
@@ -63,6 +69,11 @@ public class ShopManagementController {
         return modelMap;
     }
 
+    /**
+     * 获取店铺列表
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/getshoplist", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopList(HttpServletRequest request){
@@ -117,6 +128,11 @@ public class ShopManagementController {
         return modelMap;
     }
 
+    /**
+     * 修改店铺
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "modifyshop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> modifyShop(HttpServletRequest request){
@@ -150,9 +166,10 @@ public class ShopManagementController {
             ShopExecution se = null;
             try {
                 if (shopImg == null){
-                    se = shopService.modifyShop(shop, null, null);
+                    se = shopService.modifyShop(shop, null);
                 }else {
-                    se = shopService.modifyShop(shop, shopImg.getInputStream(),shopImg.getOriginalFilename());
+                    ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                    se = shopService.modifyShop(shop,imageHolder);
                 }
                 if (se.getState() == ShopStateEnum.SUCCESS.getState()){
                     modelMap.put("success", true);
@@ -254,7 +271,8 @@ public class ShopManagementController {
 //            }
             ShopExecution se = null;
             try {
-                se = shopService.addShop(shop, shopImg.getInputStream(),shopImg.getOriginalFilename());
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                se = shopService.addShop(shop, imageHolder);
                 if (se.getState() == ShopStateEnum.CHECK.getState()){
                     modelMap.put("success", true);
                     //该用户可以操作的店铺列表

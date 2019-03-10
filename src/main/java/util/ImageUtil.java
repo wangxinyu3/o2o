@@ -1,5 +1,6 @@
 package util;
 
+import dto.ImageHolder;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -42,9 +43,9 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(InputStream thumbnailInputStream,String fileName, String targetAddr) {
+    public static String generateThumbnail(ImageHolder thumbnail, String targetAddr) {
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(thumbnail.getImageName());
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.error("current relateiveAddr is:" + relativeAddr);
@@ -52,7 +53,34 @@ public class ImageUtil {
         logger.debug("current complete addr is :" + PathUtil.getImgBasePath() + relativeAddr);
         try {
             //新生成的图片输出到文件
-            Thumbnails.of(thumbnailInputStream).size(200, 200)
+            Thumbnails.of(thumbnail.getImage()).size(200, 200)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
+                    .outputQuality(0.8f).toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.toString());
+            e.printStackTrace();
+        }
+        return relativeAddr;
+    }
+
+    /**
+     * 处理详情图，并返回新生成图片的相对值路径
+     *
+     * @param thumbnail
+     * @param targetAddr
+     * @return
+     */
+    public static String generateNormalImg(ImageHolder thumbnail, String targetAddr) {
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(thumbnail.getImageName());
+        makeDirPath(targetAddr);
+        String relativeAddr = targetAddr + realFileName + extension;
+        logger.error("current relateiveAddr is:" + relativeAddr);
+        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+        logger.debug("current complete addr is :" + PathUtil.getImgBasePath() + relativeAddr);
+        try {
+            //新生成的图片输出到文件
+            Thumbnails.of(thumbnail.getImage()).size(337, 640)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
                     .outputQuality(0.8f).toFile(dest);
         } catch (IOException e) {
@@ -79,7 +107,7 @@ public class ImageUtil {
     /**
      * 获取输入文件流的扩展名
      *
-     * @param cFile
+     * @param
      * @return
      */
     private static String getFileExtension(String fileName) {
@@ -111,10 +139,10 @@ public class ImageUtil {
      * storePath是文件的路径还是目录的路径
      * 如果storePath是文件路径则删除该文件
      * 如果storePath是目录路径则删除该路径下所有文件
-     * @param storPath
+     * @param storePath
      */
-    public static void deleteFileOrPath(String storPath){
-        File fileOrPath = new File(PathUtil.getImgBasePath() + storPath);
+    public static void deleteFileOrPath(String storePath){
+        File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
         if (fileOrPath.exists()){
             if (fileOrPath.isDirectory()){
                 File files[] = fileOrPath.listFiles();

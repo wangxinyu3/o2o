@@ -2,7 +2,7 @@ package service;
 
 import dto.ProductCategoryExecution;
 import entity.ProductCategory;
-import exceptions.ProductCategoryOperationExecption;
+import exceptions.ProductCategoryOperationException;
 
 import java.util.List;
 
@@ -18,18 +18,18 @@ public interface ProductCategoryService {
      *
      * @param productCategoryList
      * @return
-     * @throws ProductCategoryOperationExecption
+     * @throws ProductCategoryOperationException
      */
     ProductCategoryExecution batchAddProductCategory(List<ProductCategory> productCategoryList)
-        throws ProductCategoryOperationExecption;
+        throws ProductCategoryOperationException;
 
     /**
      * 将此类别下的商品类别id置为空，再删掉该商品类别
      * @param productCategoryId
      * @param shopId
      * @return
-     * @throws ProductCategoryOperationExecption
+     * @throws ProductCategoryOperationException
      */
      ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId)
-        throws ProductCategoryOperationExecption;
+        throws ProductCategoryOperationException;
 }

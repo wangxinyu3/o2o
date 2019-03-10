@@ -1,6 +1,7 @@
 package service;
 
 import dao.BaseTest;
+import dto.ImageHolder;
 import dto.ShopExecution;
 import entity.Area;
 import entity.PersonInfo;
@@ -45,7 +46,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopName("修改后的店铺名称");
         File shopImg = new File("C:/Users/Administrator/Desktop/image/cat.jpg");
         InputStream is = new FileInputStream(shopImg);
-        ShopExecution shopExecution =shopService.modifyShop(shop, is,"cat.jpg");
+        ImageHolder imageHolder = new ImageHolder("cat.jpg",is);
+        ShopExecution shopExecution =shopService.modifyShop(shop, imageHolder);
         System.out.println("新的图片地址：" + shopExecution.getShop().getShopImg());
     }
 
@@ -70,7 +72,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setAdvice("审核中");
         File shopImg = new File("C:/Users/Administrator/Desktop/image/test.jpg");
         InputStream is = new FileInputStream(shopImg);
-        ShopExecution se = shopService.addShop(shop,is,shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),is);
+        ShopExecution se = shopService.addShop(shop,imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(),se.getState());
     }
 }

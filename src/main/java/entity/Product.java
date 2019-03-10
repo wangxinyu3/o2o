@@ -20,6 +20,8 @@ public class Product {
     private ProductCategory productCategory;
     private Shop shop;
 
+
+
     public Long getProductId() {
         return productId;
     }
